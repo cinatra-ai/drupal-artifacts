@@ -1,0 +1,80 @@
+{
+  "name": "@cinatra-ai/drupal-artifacts",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "peerDependencies": {
+    "@cinatra-ai/sdk-extensions": "*"
+  },
+  "peerDependenciesMeta": {
+    "@cinatra-ai/sdk-extensions": {
+      "optional": true
+    }
+  },
+  "cinatra": {
+    "apiVersion": "cinatra.ai/v1",
+    "kind": "artifact",
+    "displayName": "Drupal Artifacts",
+    "vendor": {
+      "key": "cinatra-ai",
+      "name": "Cinatra"
+    },
+    "dependencies": [],
+    "artifact": {
+      "accepts": {
+        "connectorRef": {
+          "resolvedMimeTypes": [
+            "text/html"
+          ]
+        }
+      },
+      "objectTypes": [
+        {
+          "type": "@cinatra-ai/drupal:node",
+          "claim": "dedicated",
+          "dispositions": {
+            "projection": "artifact-safe",
+            "pinnable": false,
+            "snapshotPolicy": "none",
+            "sensitivity": "normal",
+            "mutability": "external"
+          },
+          "schema": {
+            "type": "object",
+            "properties": {
+              "artifactType": { "const": "connector-ref" },
+              "originKind": { "const": "external_link" },
+              "mime": { "type": "string", "minLength": 1 },
+              "title": { "type": "string" },
+              "excerpt": { "type": "string" },
+              "connectorRef": {
+                "type": "object",
+                "properties": {
+                  "url": { "type": "string", "minLength": 1 },
+                  "connectorId": { "type": "string", "minLength": 1 },
+                  "externalId": { "type": "string", "minLength": 1 },
+                  "resolver": { "type": "string", "minLength": 1 },
+                  "resolvedMimeType": { "type": "string", "minLength": 1 },
+                  "state": { "enum": ["linked", "stale", "dangling"] },
+                  "lastVerifiedAt": { "type": "string", "minLength": 1 },
+                  "remoteVersion": { "type": "string", "minLength": 1 },
+                  "title": { "type": "string" },
+                  "excerpt": { "type": "string" }
+                },
+                "required": ["url", "connectorId", "externalId", "state"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["artifactType", "originKind", "mime", "connectorRef"],
+            "additionalProperties": true
+          }
+        }
+      ]
+    }
+  }
+}
