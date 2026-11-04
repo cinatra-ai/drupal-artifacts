@@ -2,11 +2,11 @@
 
 The Drupal artifacts pack for Cinatra. It makes a Drupal node an addressable artifact in the library as an **external pointer** — the canonical node stays in Drupal, and the library row holds only a deeplink plus lightweight identity (node id, title, excerpt, and a health state). The heavy fields (the rendered node body) are read on demand through the Drupal connector, never copied into the row.
 
-Install this pack via the Cinatra marketplace. Once installed (with the Drupal MCP connector), pointer rows are materialized and kept in sync by the connector: a node reached through the connector links as `linked`; when it changes upstream it becomes `stale`; when it is deleted upstream it becomes `dangling` (the row persists so history and any captured snapshots survive, and a later re-sync can re-link it). Because the pointer references live third-party content, it is **not pinnable** and is never context-selectable — capture a **snapshot** instead, which materializes the node's resolved content into a new, independent record artifact you can pin and attach. For local development, run `node extension-kind-gate.mjs --package-root .` at the repo root and confirm zero errors before submitting to the marketplace.
+Install this pack via the Cinatra marketplace. Once installed (with the Drupal MCP connector), pointer rows are materialized and kept in sync by the connector: a node reached through the connector links as `linked`; when it changes upstream it becomes `stale`; when it is deleted upstream it becomes `dangling` (the row persists so history and any captured snapshots survive, and a later re-sync can re-link it). Because the pointer references live third-party content, it is **not pinnable** and is never context-selectable — capture a **snapshot** instead, which materializes the node's resolved content into a new, independent record artifact you can pin and attach. The pack declares one type, `@cinatra-ai/drupal-artifacts:node-pointer`, and ships no renderer of its own. For local development, run `node extension-kind-gate.mjs --package-root .` at the repo root and confirm zero errors before submitting to the marketplace.
 
 ## Works with
 
-- Drupal MCP connector (`@cinatra-ai/drupal-mcp-connector`) — registers the node type, provides the content facade, and syncs pointer state
+- Drupal MCP connector (`@cinatra-ai/drupal-mcp-connector`) — provides the content facade and syncs pointer state
 - Drupal Content Editor agent
 
 ## Capabilities
